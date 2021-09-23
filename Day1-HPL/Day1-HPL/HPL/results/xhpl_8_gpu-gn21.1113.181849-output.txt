@@ -1,0 +1,86 @@
+================================================================================
+HPLinpack 2.1  --  High-Performance Linpack benchmark  --   October 26, 2012
+Written by A. Petitet and R. Clint Whaley,  Innovative Computing Laboratory, UTK
+Modified by Piotr Luszczek, Innovative Computing Laboratory, UTK
+Modified by Julien Langou, University of Colorado Denver
+================================================================================
+
+An explanation of the input/output parameters follows:
+T/V    : Wall time / encoded variant.
+N      : The order of the coefficient matrix A.
+NB     : The partitioning blocking factor.
+P      : The number of process rows.
+Q      : The number of process columns.
+Time   : Time in seconds to solve the linear system.
+Gflops : Rate of execution for solving the linear system.
+
+The following parameter values will be used:
+
+N      :  131328 
+NB     :     384 
+PMAP   : Column-major process mapping
+P      :       2 
+Q      :       4 
+PFACT  :    Left 
+NBMIN  :       2 
+NDIV   :       2 
+RFACT  :    Left 
+BCAST  :  1ringM 
+DEPTH  :       0 
+SWAP   : Binary-exchange
+L1     : no-transposed form
+U      : transposed form
+EQUIL  : yes
+ALIGN  : 8 double precision words
+
+--------------------------------------------------------------------------------
+
+- The matrix A is randomly generated for each test.
+- The following scaled residual check will be computed:
+      ||Ax-b||_oo / ( eps * ( || x ||_oo * || A ||_oo + || b ||_oo ) * N )
+- The relative machine precision (eps) is taken to be               1.110223e-16
+- Computational tests pass if scaled residuals are less than                16.0
+
+monitor_gpu from environment variable 1 
+gpu_temp_warning from environment variable 60 
+gpu_clock_warning from environment variable 1200 
+
+	******** TESTING SYSTEM PARAMETERS ********
+	PARAM 	[UNITS] 	MIN 	MAX 	AVG 
+	----- 	------- 	--- 	--- 	--- 
+CPU : 
+	CPU_BW	[GB/s ] 	16.7 	16.9 	16.8 
+	CPU_FP	[GFLPS] 	133.9 	141.9 	138.7 
+PCIE : 
+	H2D_BW	[GB/s ] 	6.1 	6.2 	6.2 
+	D2H_BW	[GB/s ] 	6.6 	6.6 	6.6 
+	BID_BW	[GB/s ] 	8.5 	8.5 	8.5 
+GPU : 
+	GPU_BW	[GB/s ] 	159 	160 	160 
+	GPU_FP	[GFLPS] 
+	     	NB =  128 	 973 	1021 	 988 
+	     	NB =  256 	1101 	1175 	1144 
+	     	NB =  384 	 980 	1176 	1056 
+	     	NB =  512 	 859 	1013 	 918 
+	     	NB =  640 	 916 	1017 	 950 
+	     	NB =  768 	 946 	1105 	 980 
+	     	NB =  896 	 926 	1056 	 973 
+	     	NB = 1024 	 941 	1118 	 997 
+NET : 
+	NET_BW	[MB/s ] 
+		     8 B  	   1 	   2 	   2 
+		    64 B  	  12 	  17 	  14 
+		   512 B  	  88 	 133 	 107 
+		     4 KB 	 251 	 311 	 272 
+		    32 KB 	 612 	 716 	 686 
+		   256 KB 	 744 	 956 	 871 
+		  2048 KB 	1088 	1247 	1162 
+		 16384 KB 	1720 	1854 	1765 
+	NET_LAT	[ us  ] 	0.7 	1.0 	0.9 
+
+displaying Prog:%complete, N:columns, Time:seconds
+iGF:instantaneous GF, GF:avg GF, GF_per: process GF
+
+
+Per-Process Host Memory Estimate: 17.65 GB (MAX) 17.45 GB (MIN)
+
