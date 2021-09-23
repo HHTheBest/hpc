@@ -1,0 +1,40 @@
+## Instructions to Configure and Run HPL for ISC
+
+This document is intended to give a quick and simple introduction to the HPL suite. Its purpose it is to guide teams for the Student Cluster Competition in getting the code ready and working on their platform.
+
+
+1 - Introduction
+================
+
+The competition will feature a "Highest Linpack" award for the team submitting the highest HPL score. 
+
+Additional, independent HPL runs (outside the submitted HPCC run) may be considered for the "Highest Linpack" award if they are performed with exactly the same hardware powered on as used for HPCC run submitted for scoring. 
+
+While eligible for the Highest Linpack award, independent HPL runs will NOT count toward the team's overall score. The HPL run must be submitted on the first day of the competition. 
+
+
+2 - HPL source code
+========================
+
+The source code for HPL can be downloaded from this web site:
+
+http://www.netlib.org/benchmark/hpl/
+
+
+3 - Competition Rules -- *** READ CAREFULLY ***
+
+- openmpi-1.10.3 to 1.10.6 are not allowed to use due to a known timer bug. Submit the output of "ompi_info --all" if you are using OpenMPI.
+
+- There will some penalty for crossing 3 KW power limit every time.
+
+- It is NOT allowed to run workload during the night, we monitor the power and we record the power when the day finish. So we know what is the power when the system is quiet and we allow only small variation
+It is forbidden to have persistent VPN or SSH tunnels connected from/to the outside, we are also monitoring the network
+
+- Follow instructions when submit application results. Failing to comply to the instructions imply score not valid. if something is not clear, speak immediately!
+
+
+4 - For Submission
+==================
+(1) Include the Makefile 
+(2) mpirun command (with any runtime tuning flags) or any job scheduler input file.
+(3) The output files that shows your best results
