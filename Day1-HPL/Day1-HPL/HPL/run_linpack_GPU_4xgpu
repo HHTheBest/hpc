@@ -1,0 +1,68 @@
+#!/bin/bash
+#location of HPL 
+HPL_DIR=`pwd`
+
+CPU_CORES_PER_RANK=4
+#CPU_CORES_PER_RANK=16
+RANK_PER_NODE=4
+
+export OMP_NUM_THREADS=$CPU_CORES_PER_RANK
+export MKL_NUM_THREADS=$CPU_CORES_PER_RANK
+export LD_LIBRARY_PATH=$HPL_DIR:$LD_LIBRARY_PATH
+
+export MONITOR_GPU=1
+export GPU_TEMP_WARNING=60
+export GPU_CLOCK_WARNING=1200
+#export GPU_POWER_WARNING=270
+#export GPU_PCIE_GEN_WARNING=3
+#export GPU_PCIE_WIDTH_WARNING=16
+
+#export CUDA_DEVICE_MAX_CONNECTIONS=16
+#export TRSM_CUTOFF=1000000
+#export GPU_DGEMM_SPLIT=1.00
+#export GPU_DGEMM_SPLIT=0.90
+#export RANK_PERF=3700
+#export CHECK_CPU_DGEMM_PERF=0
+#export CPU_DGEMM_PERF_WARNING=1000.0
+
+#sudo nvidia-smi -ac 715,1290
+
+#APP=$HPL_DIR/xhpl_cuda8044_dynamic_mkl2016_dynaamic_ompi_1.10.2_gcc485_sm35_sm60_1_17_17
+#APP=$HPL_DIR/xhpl_cuda8044_dynamic_mkl2016_dynaamic_ompi_1.6.5_gcc485_sm35_sm60_1_17_17
+#APP=$HPL_DIR/xhpl_cuda8044_static_mkl2016_static_ompi_1.10.2_gcc485_sm35_sm60_1_17_17
+#APP=$HPL_DIR/xhpl_cuda8044_static_mkl2016_static_ompi_1.6.5_gcc485_sm35_sm60_1_17_17
+#APP=$HPL_DIR/xhpl_GPU_cuda90103_static_mkl_2016_static_ompi_1.10.2_sm35_sm60_sm70
+APP=$HPL_DIR/xhpl_GPU_cuda90103_static_mkl_2016_static_ompi_1.10.2_sm35_sm60_sm70
+lrank=$OMPI_COMM_WORLD_LOCAL_RANK
+
+case ${lrank} in
+[0])
+  #uncomment next line to set GPU affinity of local rank 0
+  export CUDA_VISIBLE_DEVICES=0
+  #uncommen next line to set CPU affinity of local rank 0
+  #numactl --cpunodebind=0 \
+  $APP
+  ;;
+[1])
+  #uncomment next line to set GPU affinity of local rank 2
+  export CUDA_VISIBLE_DEVICES=1
+  #uncomment next line to set CPU affinity of local rank 2
+  #numactl --cpunodebind=0 \
+  $APP
+  ;;
+[2])
+  #uncomment next line to set GPU affinity of local rank 2
+  export CUDA_VISIBLE_DEVICES=2
+  #uncomment next line to set CPU affinity of local rank 2
+  #numactl --cpunodebind=0 \
+  $APP
+  ;;
+[3])
+  #uncomment next line to set GPU affinity of local rank 2
+  export CUDA_VISIBLE_DEVICES=3
+  #uncomment next line to set CPU affinity of local rank 2
+  #numactl --cpunodebind=0 \
+  $APP
+  ;;
+
+esac
